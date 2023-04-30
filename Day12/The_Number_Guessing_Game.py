@@ -1,8 +1,14 @@
 import random as r
 def numberToBeGuessed():
+    """
+    Get random number
+    """
     return r.randint(1,100)
 actualNum = numberToBeGuessed()
 def start_difficulty():
+    """
+    Start prompt with dificulty choice
+    """
     print("Welcome to the Number Guessing Game! \nI'm thinking of a number between 1 and 100")
     difficulty = input("Choose a difficulty. Type 'easy' or 'hard' ")
     if difficulty =="easy":
@@ -10,17 +16,24 @@ def start_difficulty():
     elif difficulty =="hard":
         return 5
 guessesLeft = start_difficulty()
-while guessesLeft>0:
-    print(f"You have {guessesLeft} attempts remaining to guess the number.")
-    guess = int(input("Make a guess: "))
+
+def checker(guess,actualNum):
+    """
+    Checks the number
+    """
     if guess > actualNum:
-        print("Too high.")
+        return("Too high.")
     elif guess < actualNum:
-        print("Too low.")
+        return("Too low.")
     elif guess == actualNum:
-        print(f"You got it! The answer was {actualNum}.")
+        return (f"You got it! The answer was {actualNum}.")
+
+while guessesLeft>0:
+    print(f"You have",guessesLeft, "attempts remaining to guess the number.")
+    guess = int(input("Make a guess: "))
+    print(checker(guess,actualNum))
+    if checker(guess,actualNum) == (f"You got it! The answer was {actualNum}."):
         break
     guessesLeft-=1
-
 if guessesLeft<0:
     print("You've ran out of guesses, you lose.")
