@@ -44,7 +44,6 @@ def intro():
     global finish
     orderMemory= order()
     if ingredientsNeededForDrink() == False:
-        finish = False
         return
     changes = coins_entered()
     if changes < MENU[orderMemory]["cost"]:
