@@ -30,27 +30,29 @@ resources = {
     "coffee": 100,
 }
 
-
+finish = True
 
 def order():
-    order = input(" What would you like? (espresso/latte/capuccino): ")
+    order = input(" What would you like? (espresso/latte/cappuccino): ")
     return order
 
         #use this shit
 #fix checker
-finish = True
+
 def intro():
     global orderMemory
+    global finish
     orderMemory= order()
-    changes = coins_entered()
-    if resources["water"]<100:
+    if ingredientsNeededForDrink() == False:
         finish = False
+        return
+    changes = coins_entered()
     if changes < MENU[orderMemory]["cost"]:
-         return "Sorry that's not enough money. Money refunded."
+        print("Sorry that's not enough money. Money refunded.")
+        return
     else:
         changes = changes-(MENU[orderMemory]["cost"])
         print("Here is $",changes," in change.")
-        print(ingredientsNeededForDrink())
 #returns if something is missing, else just none
 #make list of keys, then iterate
 # def resource_checker():
@@ -71,10 +73,13 @@ def ingredientsNeededForDrink():
     materials = MENU.get(orderMemory)
     for j in materials['ingredients']:
         if ((MENU[orderMemory]['ingredients'][j]) > resources.get(j)):
-            return f"Sorry there's not enough {j}."
-        else:
-            resources.get(j) -MENU[orderMemory]['ingredients'][j]
-            return f"Here is your {orderMemory}. Enjoy!"
+            print( f"Sorry there's not enough {j}.")
+            return False
+        else:   #update value of resources
+            resources[j] = resources.get(j) -MENU[orderMemory]['ingredients'][j]
+            # resources.update(j,resources.get(j) -MENU[orderMemory]['ingredients'][j])
+            print(f"Here is your {orderMemory}. Enjoy!")
+            return True
 
 
 
@@ -86,6 +91,7 @@ def coins_entered():
     pennies = int(input("How many pennies? "))
     return  (quarters*0.25)+(dimes*0.1)+(nickels*0.05)+(pennies*0.01)
 
-while finish:
+while (finish):
     intro()
+print("machine off")
 # price = coins_entered()
