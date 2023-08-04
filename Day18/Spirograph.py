@@ -17,7 +17,7 @@ def random_color():
 directions = [0, 90, 180, 270]
 
 tim.speed('fastest')
-for i in range(4000):
+for i in range(200):
     tim.color(random_color())
     tim.circle(100)
     tim.right(17)
